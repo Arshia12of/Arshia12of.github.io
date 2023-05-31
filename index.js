@@ -1,4 +1,4 @@
-const AA = document.querySelector("#a")
+const AA = document.querySelector("#aa")
 AA.addEventListener("click", () => {
     AA.style.color = "green";
 })
