@@ -1,0 +1,31 @@
+{% extends "health/layout.html" %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block body %}
+    <script>
+        var action = document.getElementById("profile");
+        action.classList.add("active");
+    </script>
+    <div class="div2" style="color: white; padding: 20px;">
+        <p>Height: {{ health_data.height }} cm</p>
+        <p>Weight: {{ health_data.weight }} kg</p>
+        <p>Age: {{ health_data.age }}</p>
+
+        <a href="{% url 'change_register' %}"><button style="margin: 8px;" class="button1" type="submit">Change</button></a>
+
+        <div class="input1" style="margin-top: 20px; color: black;">
+            <p>BMI: {{ health_data.bmi }}  ({{ message }})</p>
+
+            <p>daily calories: {{ health_data.bmr }} kcal/day</p>
+        </div>
+
+    </div>
+    <ul class="ul div4">
+        <li class="li"><a href="{% url 'history' %}"><b>History</b></a</li>
+        <li class="li"><a href="{% url 'change_password' %}"><b>Change Password</b></a></li>
+        <li class="li"><a href="{% url 'logout' %}"><b>Log Out</b></a></li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'health/layout.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    <div class="div1" style="margin-bottom: 200px;">
+        <div style="height: 50px; width: 100%;"></div>
+        {% if user.is_authenticated %}
+            <div class="font1">Welcom {{ user.username }}</div>
+        {% else %}
+            <div class="font1">Welcom</div>
+        {% endif %}
+        <div class="slideshow-container">
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 3</div>
+                <img class="img" src="{% static 'health/38858192.jpg' %}">
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext" style="color: black;">2 / 3</div>
+                <img class="img" src="{% static 'health/19100227.jpg' %}">
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">3 / 3</div>
+                <img class="img" src="{% static 'health/222.jpg' %}">
+            </div>
+
+            <a class="prev">&#10094;</a>
+            <a class="next">&#10095;</a>
+
+        </div>
+        <br>
+        <div style="text-align:center;">
+            <span data-slide=1 class="dot"></span>
+            <span data-slide=2 class="dot"></span>
+            <span data-slide=3 class="dot"></span>
+            <span id="a" class="dot1 material-icons">pause_circle_filled</span>
+        </div><br><br><br>
+
+        <div style="padding-top: 20px; padding-bottom: 100px;">
+
+            {% if user.is_authenticated %}
+            <div>
+                <svg id="p" width="280" height="170" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                    <defs>
+                        <linearGradient id="pppa">
+                            <stop class="stop1" offset="0%" />
+                            <stop class="stop2" offset="25%" />
+                            <stop class="stop3" offset="50%" />
+                            <stop class="stop4" offset="75%" />
+                            <stop class="stop5" offset="100%" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M 50 140
+                    A 90 90, 0, 0, 1, 230 140"
+                    stroke="black" stroke-width="5" fill="transparent"/>
+                    <path id="remaining"/>
+                    <path id="consumed"/>
+                    <text id="consumed_per" x="140" y="90"></text>
+                </svg>
+                <div id="left_cal"><h3></h3></div>
+            </div>
+            {% endif %}
+
+            <label style="color: #ffe000; margin-bottom: 10px;">Choose a Food:</label>
+            <select data-show="food" name="data" id="data"></select>
+
+            <input class="input1" autocomplete="off" id="cal_number" type="number" min="1" title="Enter weight of your food in gram" placeholder="Enter weight of your food" style="display: none;">
+
+            <div id="buttons_div" class="div4"></div>
+
+            <strong id="calorie" style="display: none;"></strong>
+
+            <button title="Click to show total caloris" id="grams" style="display: none; margin: 8px;" class="button1" type="button">Total Calories</button>
+            <strong id="error" style="color: red; display: none;"></strong>
+
+            <strong id="path" style="display: none;"></strong>
+            <strong id="calories" style="display: none; margin: 8px;"></strong>
+            {% if user.is_authenticated %}
+            <button title="Click to subtract daily calories" id="subtract" style="display: none; margin: 8px;" class="button1" type="button">Subtract</button>
+            {% endif %}
+            <button title="Click to back Food list" id="food_list" style="display: none; margin: 8px;" class="button1" type="button">Food List</button>
+        </div>
+    </div>
+    {% if user.is_authenticated %}
+        <script src="{% static 'health/auth_index.js' %}"></script>
+    {% endif %}
+    <script src="{% static 'health/index.js' %}"></script>
+{% endblock %}

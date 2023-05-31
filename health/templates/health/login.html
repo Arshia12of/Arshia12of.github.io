@@ -1,0 +1,63 @@
+{% extends "health/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Log in
+{% endblock %}
+
+{% block body %}
+    <script>
+        var action = document.getElementById("login");
+        action.classList.add("active");
+    </script>
+    <div class="overlay"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
+    <form id="login_form" class="div1" style="padding-top: 40px; padding-bottom: 50px;">
+        <p>Please log in. If you haven't an account press <b>create account</b>.</p>
+        <hr><br>
+        <p><b id="error" style="color: red; display: none; margin-bottom: 40px;"></b></p>
+        <div class="group">
+            <input class="input1" autocomplete="off" type="text" id="username" title="Enter Username" name="username" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label class="label" for="username">Username</label>
+        </div>
+
+        <div class="group">
+            <input class="input1" autocomplete="off" type="password" title="Enter Password" id="psw" name="password" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label class="label" for="password">Password</label>
+        </div>
+
+        <h3>
+            <input type="checkbox" id="check">
+            <label for="check"> Show Password</label><br><br>
+        </h3>
+
+        <button style="margin: 8px;" class="button1" type="submit">Log in</button>
+        <hr style="margin: 20px;">
+        <p class="div4" style="margin-top: 10px;">
+            <a href="{% url 'sign_up' %}">
+                <button style="margin: 8px;" class="cssbuttons-io-button" type="button">
+                    Create Account
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path></svg>
+                    </div>
+                </button>
+            </a>
+        </p>
+    </form>
+    <script src="{% static 'health/login.js' %}"></script>
+    <script>
+        document.getElementById("check").addEventListener("click", () => {
+            if (document.getElementById("check").checked == true)
+            {
+                document.getElementById("psw").type = "text";
+            }
+            else
+            {
+                document.getElementById("psw").type = "password";
+            }
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="{% static 'health/style.css' %}" rel="stylesheet">
+        <link rel="icon" href="{% static 'Health/favicon.png' %}" type="image/png">
+        <title>Health Magic: Register</title>
+    </head>
+    <body>
+        <div class="overlay"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
+        <form id="register_form" class="div1" style="padding-top: 40px; padding-bottom: 20px;">
+            <p><b id="error" style="color: red; display: none; margin-bottom: 40px;"></b></p>
+            <div class="group">
+                <input class="input1" autocomplete="off" type="number" id="height" title="Enter your height in centimeters" name="height" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label class="label" for="height"><b>Height (cm)</b></label>
+            </div>
+
+            <div class="group">
+                <input class="input1" autocomplete="off" type="text" id="weight" title="Enter your weight in kilogram" name="weight" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label class="label" for="weight"><b>Weight (kg)</b></label>
+            </div>
+
+            <div class="group">
+                <input class="input1" autocomplete="off" type="number" id="age" title="Enter your age" name="age" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label class="label" for="age"><b>Age</b></label>
+            </div>
+
+            <div class="group">
+                <b style="color: #ffe000; margin-bottom: 5px;">Gender</b>
+                <div class="input1 font">
+                    <input type="radio" id="male" name="gender" value="Male" required>
+                    <label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="Female" required>
+                    <label for="female">Female</label>
+                </div>
+            </div>
+
+            <lable style="color: #ffe000; margin-bottom: 5px;" for="activity"><b>Activity</b></lable>
+            <select id="activity" name="activity">
+                <option value='0' selected>Basal Metabolic Rate (BMR)</option>
+                <option value='1'>Sedentary (little or no exercise)</option>
+                <option value='2'>Lightly Active (light exercise/sports 1-3 days/week)</option>
+                <option value='3'>Moderately Active (moderate exercise/sports 3-5 days/week)</option>
+                <option value='4'>Very Active (hard exercise/sports 6-7 days a week)</option>
+                <option value='5'>If you are extra active (very hard exercise/sports & a physical job)</option>
+            </select><br><br>
+
+            <button style="margin: 8px;" class="button1" type="submit">Register</button>
+        </form>
+        <script src="{% static 'health/register.js' %}"></script>
+        <script>
+            document.getElementById("weight").addEventListener("change", () => {
+                var x = document.getElementById("weight").value;
+                if (!Number(x) && x != "") {
+                    document.getElementById("weight").value = "";
+                }
+
+                else {
+                    document.getElementById("weight").value = Number(document.getElementById("weight").value).toFixed(1);
+                    if (document.getElementById("weight").value == 0.0) {
+                        document.getElementById("weight").value = "";
+                    }
+                }
+            })
+            document.getElementById("weight").addEventListener("blur", () => {
+                var x = document.getElementById("weight").value;
+                if (!Number(x) && x != "") {
+                    document.getElementById("weight").value = "";
+                }
+
+                else {
+                    document.getElementById("weight").value = Number(document.getElementById("weight").value).toFixed(1);
+                    if (document.getElementById("weight").value == 0.0) {
+                        document.getElementById("weight").value = "";
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

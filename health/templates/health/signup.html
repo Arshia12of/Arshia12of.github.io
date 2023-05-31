@@ -1,0 +1,66 @@
+{% extends "health/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Sign Up
+{% endblock %}
+
+{% block body %}
+    <div class="overlay"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
+    <form class="div1" style="padding-top: 40px; padding-bottom: 20px;" id="signup_form">
+        <p><b>Please Sign Up.</b></p>
+        <hr><br>
+
+        <p><b id="error" style="color: red; display: none; margin-bottom: 40px;"></b></p>
+
+        <div class="group">
+            <input class="input1" autocomplete="off" type="text" title="Enter Username" id="username" name="username" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label class="label" for="username"><b>Username</b></label>
+        </div>
+
+        <div class="group">
+            <input class="input1" autocomplete="off" type="email" title="Enter Email" id="email" name="email" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label class="label" for="email"><b>Email</b></label>
+        </div>
+
+        <div class="group">
+            <input class="input1" autocomplete="off" type="password" title="Enter Password" id="psw" name="password" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label class="label" for="password"><b>Password</b></label>
+        </div>
+
+        <div class="group">
+            <input class="input1" autocomplete="off" type="password" title="Enter Confirm Password" id="confirmation" name="confirmation" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label class="label" for="password"><b>Confirm Password</b></label>
+        </div>
+
+        <h3>
+            <input type="checkbox" id="check">
+            <label for="check"> Show Password</label><br><br>
+        </h3>
+
+        <button style="margin: 8px;" class="button1" type="submit">Sign Up</button>
+    </form>
+    <script src="{% static 'health/signup.js' %}"></script>
+    <script>
+        document.getElementById("check").addEventListener("click", () => {
+            if (document.getElementById("check").checked == true)
+            {
+                document.getElementById("psw").type = "text";
+                document.getElementById("confirmation").type = "text";
+            }
+            else
+            {
+                document.getElementById("psw").type = "password";
+                document.getElementById("confirmation").type = "password";
+            }
+        })
+    </script>
+{% endblock %}

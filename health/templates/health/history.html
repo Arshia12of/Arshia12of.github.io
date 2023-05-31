@@ -1,0 +1,128 @@
+{% extends "health/layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block body %}
+    <div style="text-align: center; margin-top: 8px; margin-bottom: 10px;">
+        <label for="date">Search Date: </label>
+        <input class="input" autocomplete="off" id="date" type="date" title="Enter date">
+        <input class="button" title="Click to search" type="button" value="Search" id="search">
+        <input class="button" title="Click to sea all history" type="button" value="All" id="all">
+        <p id="empty_error" style="display: none; color: red;"></p>
+    </div>
+    <div class="div">
+        <table style="text-align: center; width: 100%; border-collapse: collapse;" id="history_table">
+            <thead>
+                <tr>
+                    <th><b>Date (Year-Month-day)</b></th>
+                    <th><b>Time (Hour:Minute)</b></th>
+                    <th><b>Food</b></th>
+                    <th><b>Calories</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in history %}
+                    <tr>
+                        <td>{{ data.date }}</td>
+                        <td>{{ data.time }}</td>
+                        <td>{{ data.food }}</td>
+                        <td>{{ data.calorie }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p style="padding-top: 10px; padding-bottom: 30px; display: none; color: red;" id="error"></p>
+        <p style="padding-top: 10px; padding-bottom: 30px; display: none;" id="total_cal"></p>
+    </div>
+    <script>
+        document.querySelector("#search").addEventListener("click", () => {
+            var date = document.getElementById("date").value;
+            let length = document.getElementById("history_table").rows.length;
+            let j = 0;
+            document.getElementById("total_cal").innerHTML = "";
+            document.getElementById("total_cal").style.display = "none";
+            if (date != "") {
+                total = 0;
+                document.getElementById("empty_error").innerHTML = "";
+                document.getElementById("empty_error").style.display = "none";
+                for (let i = 1; i < length; i++) {
+                    var dates = document.getElementById("history_table").rows[i].cells[0].innerHTML;
+                    if ( dates == date) {
+                        document.getElementById("history_table").rows[i].style.display = "";
+                        total += Number(document.getElementById("history_table").rows[i].cells[3].innerHTML)
+                        document.getElementById("total_cal").innerHTML = "<h1>" + "Total Calories:" + " " + total + " kcal" + "</h1>";
+                        document.getElementById("total_cal").style.display = "";
+                    }
+
+                    else {
+                        document.getElementById("history_table").rows[i].style.display = "none";
+                        j++;
+                    }
+
+                    if (j == length - 1) {
+                        document.getElementById("error").innerHTML = "<h1>*Date don't find!</h1>";
+                        document.getElementById("error").style.display = "block";
+                    }
+
+                    else {
+                        document.getElementById("error").innerHTML = "";
+                        document.getElementById("error").style.display = "none";
+                    }
+                }
+            }
+
+            else {
+                document.getElementById("error").innerHTML = "";
+                document.getElementById("error").style.display = "none";
+                let length = document.getElementById("history_table").rows.length;
+                for (let i = 1; i < length; i++) {
+                    document.getElementById("history_table").rows[i].style.display = "";
+                }
+                document.getElementById("empty_error").innerHTML = "*Date is empty!";
+                document.getElementById("empty_error").style.display = "block";
+            }
+        })
+        document.querySelector("#all").addEventListener("click", () => {
+            document.getElementById("date").value = "";
+            document.getElementById("total_cal").innerHTML = "";
+            document.getElementById("total_cal").style.display = "none";
+            document.getElementById("error").innerHTML = "";
+            document.getElementById("error").style.display = "none";
+            document.getElementById("empty_error").innerHTML = "";
+            document.getElementById("empty_error").style.display = "none";
+            let length = document.getElementById("history_table").rows.length;
+            for (let i = 1; i < length; i++) {
+                document.getElementById("history_table").rows[i].style.display = "";
+            }
+        })
+    </script>
+    <script>
+        function sendMail(name, email, subject, message) {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.set('Authorization', 'Basic ' + base64.encode('<API Key>'+":" +'<Secret Key>'));
+
+  const data = JSON.stringify({
+    "Messages": [{
+      "From": {"Email": "<YOUR EMAIL>", "Name": "<YOUR NAME>"},
+      "To": [{"Email": email, "Name": name}],
+      "Subject": subject,
+      "TextPart": message
+    }]
+  });
+
+  const requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: data,
+  };
+
+  fetch("https://api.mailjet.com/v3.1/send", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+}
+    </script>
+{% endblock %}
